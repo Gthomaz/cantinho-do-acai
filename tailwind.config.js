@@ -11,7 +11,7 @@ export default {
         'brand-purple-dark': '#311b92',
         'brand-yellow': '#fbc02d', 
         'brand-yellow-light': '#fff59d',
-        'bg-dark': '#d16b84', /* Rosa escurecido conforme pedido */
+        'bg-dark': '#5f4b8b', /* Tonalidade de Lilás elegante */
         'bg-card': '#4a148c', /* Roxo profundo (estilo área de bebidas do panfleto) */
         'bg-surface': '#311b92',
       },
