@@ -11,7 +11,7 @@ export default {
         'brand-purple-dark': '#311b92',
         'brand-yellow': '#fbc02d', 
         'brand-yellow-light': '#fff59d',
-        'bg-dark': '#121212',
+        'bg-dark': '#e3869d', /* Tom rosa suave inspirado na palavra açaí da logo */
         'bg-card': '#1e1e1e',
         'bg-surface': '#2d2d2d',
       },
