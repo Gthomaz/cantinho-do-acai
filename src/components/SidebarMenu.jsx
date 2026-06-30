@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Home, Info, Phone, MapPin, User } from 'lucide-react';
+import { X, Home, Info, Phone, MapPin, User, MessageCircle } from 'lucide-react';
 
 export default function SidebarMenu({ isOpen, onClose }) {
   return (
@@ -54,6 +54,10 @@ export default function SidebarMenu({ isOpen, onClose }) {
                 <button className="flex items-center gap-4 text-gray-300 hover:text-[#39ff14] transition-colors p-3.5 bg-bg-card rounded-xl border border-gray-800 shadow-sm">
                   <Home size={22} className="text-brand-yellow" />
                   <span className="font-semibold">Início</span>
+                </button>
+                <button className="flex items-center gap-4 text-gray-300 hover:text-[#39ff14] transition-colors p-3.5 bg-bg-card rounded-xl border border-gray-800 shadow-sm">
+                  <MessageCircle size={22} className="text-brand-yellow" />
+                  <span className="font-semibold">Bate-Papo</span>
                 </button>
                 <button className="flex items-center gap-4 text-gray-300 hover:text-[#39ff14] transition-colors p-3.5 bg-bg-card rounded-xl border border-gray-800 shadow-sm">
                   <MapPin size={22} className="text-brand-yellow" />
