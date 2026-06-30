@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './styles/theme.css';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider, CartContext } from './contexts/CartContext';
-import { menuData } from './data/menu';
+import { menuData } from './data/menu'; // Mantido para as categorias estáticas temporariamente
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AdminDashboard from './pages/AdminDashboard';
+import { supabase } from './lib/supabaseClient';
 
 import CategoryNav from './components/CategoryNav';
 import ProductCard from './components/ProductCard';
@@ -13,7 +14,7 @@ import CartDrawer from './components/CartDrawer';
 import BottomNav from './components/BottomNav';
 import SidebarMenu from './components/SidebarMenu';
 import Checkout from './components/Checkout';
-import { Menu } from 'lucide-react';
+import { Menu, Loader2 } from 'lucide-react';
 
 const MainApp = () => {
   const [selectedCategory, setSelectedCategory] = useState(menuData.categories[0].id);
@@ -21,13 +22,33 @@ const MainApp = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   
   // Conector simples entre CartDrawer e Checkout
   window.openCheckout = () => setIsCheckoutOpen(true);
   
   const { cartItems, addToCart, removeFromCart, updateQuantity } = useContext(CartContext);
 
-  const filteredProducts = menuData.products.filter(p => p.category === selectedCategory);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase
+        .from('acai_products')
+        .select('*')
+        .eq('type', 'product')
+        .eq('is_active', true)
+        .order('price', { ascending: true });
+        
+      if (data) {
+        setProducts(data);
+      }
+      setLoadingProducts(false);
+    };
+    
+    fetchProducts();
+  }, []);
+
+  const filteredProducts = products.filter(p => p.category === selectedCategory);
 
   const cartTotal = cartItems.reduce((acc, item) => acc + ((item.finalPrice || item.price) * (item.quantity || 1)), 0);
   const cartCount = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
@@ -77,13 +98,24 @@ const MainApp = () => {
           {menuData.categories.find(c => c.id === selectedCategory)?.name}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {filteredProducts.map(product => (
-            <ProductCard 
-              key={product.id} 
-              product={product} 
-              onClick={(p) => setSelectedProduct(p)} 
-            />
-          ))}
+          {loadingProducts ? (
+            <div className="col-span-full flex flex-col items-center justify-center py-12 text-[#39ff14]">
+              <Loader2 className="animate-spin w-12 h-12 mb-4" />
+              <p>Carregando cardápio fresquinho...</p>
+            </div>
+          ) : filteredProducts.length > 0 ? (
+            filteredProducts.map(product => (
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                onClick={(p) => setSelectedProduct(p)} 
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center py-8 text-gray-400">
+              Nenhum produto encontrado nesta categoria no momento.
+            </div>
+          )}
         </div>
       </main>
 

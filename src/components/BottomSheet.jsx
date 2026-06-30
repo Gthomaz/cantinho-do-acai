@@ -1,12 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plus, Minus } from 'lucide-react';
-import { menuData } from '../data/menu';
+import { X, Plus, Minus, Loader2 } from 'lucide-react';
+import { supabase } from '../lib/supabaseClient';
 
 export default function BottomSheet({ product, onClose, onAdd }) {
   const [selectedCremes, setSelectedCremes] = useState([]);
   const [selectedComplementos, setSelectedComplementos] = useState([]);
   const [selectedAdicionais, setSelectedAdicionais] = useState([]);
+  
+  // Dados vindos do banco
+  const [extras, setExtras] = useState({ cremes: [], complementos: [], adicionais: [] });
+  const [loadingExtras, setLoadingExtras] = useState(false);
+
+  useEffect(() => {
+    if (product) {
+      fetchExtras();
+    }
+  }, [product]);
+
+  const fetchExtras = async () => {
+    setLoadingExtras(true);
+    const { data, error } = await supabase
+      .from('acai_products')
+      .select('*')
+      .neq('type', 'product')
+      .eq('is_active', true)
+      .order('price', { ascending: true });
+      
+    if (data) {
+      setExtras({
+        cremes: data.filter(i => i.type === 'creme'),
+        complementos: data.filter(i => i.type === 'complemento'),
+        adicionais: data.filter(i => i.type === 'adicional')
+      });
+    }
+    setLoadingExtras(false);
+  };
 
   if (!product) return null;
 
@@ -70,8 +99,11 @@ export default function BottomSheet({ product, onClose, onAdd }) {
               {/* Cremes */}
               <section>
                 <h3 className="font-bold text-lg text-brand-yellow mb-4">Escolha os Cremes</h3>
+                {loadingExtras ? (
+                  <div className="flex items-center gap-2 text-gray-400"><Loader2 className="animate-spin w-4 h-4"/> Carregando...</div>
+                ) : (
                 <div className="grid grid-cols-2 gap-3">
-                  {menuData.cremes.map(creme => (
+                  {extras.cremes.map(creme => (
                     <button 
                       key={creme.id}
                       onClick={() => handleToggle(creme, 'cremes', selectedCremes, setSelectedCremes)}
@@ -85,6 +117,7 @@ export default function BottomSheet({ product, onClose, onAdd }) {
                     </button>
                   ))}
                 </div>
+                )}
               </section>
 
               {/* Complementos */}
@@ -94,7 +127,7 @@ export default function BottomSheet({ product, onClose, onAdd }) {
                   <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">+ R$ 2,00 cada</span>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  {menuData.complementos.map(comp => (
+                  {extras.complementos.map(comp => (
                     <button 
                       key={comp.id}
                       onClick={() => handleToggle(comp, 'complementos', selectedComplementos, setSelectedComplementos)}
@@ -115,11 +148,11 @@ export default function BottomSheet({ product, onClose, onAdd }) {
               <section>
                 <h3 className="font-bold text-lg text-brand-yellow mb-4">Adicionais Premium</h3>
                 <div className="space-y-3">
-                  {menuData.adicionais.map(ad => (
+                  {extras.adicionais.map(ad => (
                     <div key={ad.id} className="flex justify-between items-center p-3 rounded-xl border border-gray-800 bg-bg-card">
                       <span className="text-gray-300">{ad.name}</span>
                       <div className="flex items-center gap-3">
-                        <span className="text-sm text-gray-500">+ R$ {ad.price.toFixed(2)}</span>
+                        <span className="text-sm text-gray-500">+ R$ {Number(ad.price).toFixed(2)}</span>
                         <button 
                           onClick={() => handleToggle(ad, 'adicionais', selectedAdicionais, setSelectedAdicionais)}
                           className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${

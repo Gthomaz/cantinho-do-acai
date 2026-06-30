@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Settings, Users, Box, Image as ImageIcon, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ProductManager from '../components/ProductManager';
 
 export default function AdminDashboard() {
+  const [activeView, setActiveView] = useState('dashboard'); // 'dashboard' or 'products'
   return (
     <div className="min-h-screen bg-[#121212] text-white p-6">
       <div className="max-w-6xl mx-auto space-y-8">
@@ -13,17 +15,28 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-black text-[#39ff14] mb-1">Quartel General</h1>
             <p className="text-gray-400">Painel do CEO - Cantinho do Açaí</p>
           </div>
-          <Link to="/" className="flex items-center gap-2 bg-[#4a148c] hover:bg-[#380d6e] text-white px-4 py-2 rounded-lg font-bold transition-colors">
-            <ArrowLeft size={20} />
-            Voltar para Loja
-          </Link>
+          {activeView === 'dashboard' ? (
+            <Link to="/" className="flex items-center gap-2 bg-[#4a148c] hover:bg-[#380d6e] text-white px-4 py-2 rounded-lg font-bold transition-colors">
+              <ArrowLeft size={20} />
+              Voltar para Loja
+            </Link>
+          ) : (
+            <button onClick={() => setActiveView('dashboard')} className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-bold transition-colors">
+              <ArrowLeft size={20} />
+              Voltar ao Início
+            </button>
+          )}
         </header>
 
-        {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Dynamic Content */}
+        {activeView === 'dashboard' ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* Card: Produtos */}
-          <div className="bg-[#1e1e1e] p-6 rounded-2xl border border-gray-800 hover:border-[#39ff14]/50 transition-colors cursor-pointer group">
+          <div 
+            onClick={() => setActiveView('products')}
+            className="bg-[#1e1e1e] p-6 rounded-2xl border border-gray-800 hover:border-[#39ff14]/50 transition-colors cursor-pointer group"
+          >
             <div className="bg-[#39ff14]/10 w-14 h-14 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <Box className="text-[#39ff14]" size={28} />
             </div>
@@ -59,6 +72,9 @@ export default function AdminDashboard() {
           </div>
 
         </div>
+        ) : activeView === 'products' ? (
+          <ProductManager />
+        ) : null}
 
       </div>
     </div>
