@@ -3,7 +3,7 @@ import { Home, Search, ShoppingCart, User } from 'lucide-react';
 
 export default function BottomNav({ cartCount, onCartClick }) {
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-[#39ff14] px-6 py-3 flex justify-between items-center z-40 pb-safe shadow-[0_-5px_20px_rgba(57,255,20,0.4)] rounded-t-3xl">
+    <div className="fixed bottom-0 left-0 w-full bg-[#39ff14]/85 backdrop-blur-md px-6 py-3 flex justify-between items-center z-40 pb-safe shadow-[0_-5px_20px_rgba(57,255,20,0.3)] rounded-t-3xl">
       <button className="flex flex-col items-center gap-1 text-[#4a148c]">
         <Home size={24} />
         <span className="text-[10px] font-black">Início</span>
