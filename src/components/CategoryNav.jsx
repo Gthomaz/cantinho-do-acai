@@ -10,7 +10,7 @@ export default function CategoryNav({ categories, selectedCategory, onSelect }) 
             onClick={() => onSelect(cat.id)}
             className={`whitespace-nowrap px-3 py-1.5 text-[13px] rounded-full font-semibold transition-all duration-300 ${
               selectedCategory === cat.id 
-                ? 'bg-brand-purple text-brand-yellow-light shadow-[0_0_15px_rgba(74,20,140,0.5)]' 
+                ? 'bg-brand-purple text-cyan-400 shadow-[0_0_15px_rgba(74,20,140,0.5)]' 
                 : 'bg-bg-card text-gray-300 border border-gray-700 hover:bg-gray-800'
             }`}
           >
