@@ -11,9 +11,9 @@ export default {
         'brand-purple-dark': '#311b92',
         'brand-yellow': '#fbc02d', 
         'brand-yellow-light': '#fff59d',
-        'bg-dark': '#e3869d', /* Tom rosa suave inspirado na palavra açaí da logo */
-        'bg-card': '#1e1e1e',
-        'bg-surface': '#2d2d2d',
+        'bg-dark': '#d16b84', /* Rosa escurecido conforme pedido */
+        'bg-card': '#4a148c', /* Roxo profundo (estilo área de bebidas do panfleto) */
+        'bg-surface': '#311b92',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
