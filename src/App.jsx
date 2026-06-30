@@ -3,6 +3,8 @@ import './styles/theme.css';
 import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider, CartContext } from './contexts/CartContext';
 import { menuData } from './data/menu';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AdminDashboard from './pages/AdminDashboard';
 
 import CategoryNav from './components/CategoryNav';
 import ProductCard from './components/ProductCard';
@@ -23,9 +25,12 @@ const MainApp = () => {
   // Conector simples entre CartDrawer e Checkout
   window.openCheckout = () => setIsCheckoutOpen(true);
   
-  const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
+  const { cartItems, addToCart, removeFromCart, updateQuantity } = useContext(CartContext);
 
   const filteredProducts = menuData.products.filter(p => p.category === selectedCategory);
+
+  const cartTotal = cartItems.reduce((acc, item) => acc + ((item.finalPrice || item.price) * (item.quantity || 1)), 0);
+  const cartCount = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
   return (
     <div className="min-h-screen bg-bg-dark flex flex-col pb-24">
@@ -88,7 +93,7 @@ const MainApp = () => {
         isOpen={isCheckoutOpen} 
         onClose={() => setIsCheckoutOpen(false)} 
         cartItems={cartItems} 
-        total={cartItems.reduce((acc, item) => acc + (item.finalPrice || item.price), 0)} 
+        total={cartTotal} 
       />
       <BottomSheet 
         product={selectedProduct} 
@@ -101,10 +106,11 @@ const MainApp = () => {
         onClose={() => setIsCartOpen(false)} 
         cartItems={cartItems}
         onRemove={removeFromCart}
+        updateQuantity={updateQuantity}
       />
 
       <BottomNav 
-        cartCount={cartItems.length} 
+        cartCount={cartCount} 
         onCartClick={() => setIsCartOpen(true)} 
       />
     </div>
@@ -113,10 +119,15 @@ const MainApp = () => {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <MainApp />
-      </CartProvider>
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
+          <Routes>
+            <Route path="/" element={<MainApp />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
+        </CartProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }

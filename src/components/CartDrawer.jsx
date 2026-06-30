@@ -2,8 +2,8 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2 } from 'lucide-react';
 
-export default function CartDrawer({ isOpen, onClose, cartItems, onRemove }) {
-  const total = cartItems.reduce((acc, item) => acc + (item.finalPrice || item.price), 0);
+export default function CartDrawer({ isOpen, onClose, cartItems, onRemove, updateQuantity }) {
+  const total = cartItems.reduce((acc, item) => acc + ((item.finalPrice || item.price) * (item.quantity || 1)), 0);
 
   return (
     <AnimatePresence>
@@ -40,7 +40,10 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemove }) {
                 cartItems.map((item, idx) => (
                   <div key={idx} className="bg-bg-card p-4 rounded-2xl border border-gray-800 relative">
                     <div className="flex justify-between items-start">
-                      <h4 className="font-bold text-white text-lg">{item.name}</h4>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-bold text-white text-lg">{item.name}</h4>
+                        {item.quantity > 1 && <span className="bg-brand-purple text-white text-xs px-2 py-0.5 rounded-full">x{item.quantity}</span>}
+                      </div>
                       <button onClick={() => onRemove(idx)} className="text-red-500 hover:text-red-400 p-1">
                         <Trash2 size={18} />
                       </button>
@@ -53,8 +56,15 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemove }) {
                     </div>
 
                     <div className="mt-4 flex justify-between items-center border-t border-gray-800 pt-3">
-                      <span className="text-gray-400">Total do Item</span>
-                      <span className="font-bold text-brand-yellow">R$ {(item.finalPrice || item.price).toFixed(2)}</span>
+                      <div className="flex items-center gap-3 bg-bg-dark rounded-full px-3 py-1">
+                        <button onClick={() => updateQuantity && updateQuantity(idx, -1)} className="text-gray-400 hover:text-white font-bold text-lg px-2">-</button>
+                        <span className="text-white font-bold w-4 text-center">{item.quantity || 1}</span>
+                        <button onClick={() => updateQuantity && updateQuantity(idx, 1)} className="text-brand-yellow hover:text-brand-yellow/80 font-bold text-lg px-2">+</button>
+                      </div>
+                      <div className="flex flex-col items-end">
+                        <span className="text-gray-400 text-xs">Total do Item</span>
+                        <span className="font-bold text-brand-yellow">R$ {((item.finalPrice || item.price) * (item.quantity || 1)).toFixed(2)}</span>
+                      </div>
                     </div>
                   </div>
                 ))
