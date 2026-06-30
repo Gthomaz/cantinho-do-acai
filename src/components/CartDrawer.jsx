@@ -65,10 +65,16 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemove }) {
               <div className="p-6 border-t border-gray-800 bg-bg-card pb-safe">
                 <div className="flex justify-between items-center mb-6">
                   <span className="text-gray-300 text-lg">Total do Pedido</span>
-                  <span className="text-3xl font-black text-brand-yellow">R$ {total.toFixed(2)}</span>
+                  <span className="text-3xl font-black text-[#39ff14]">R$ {total.toFixed(2)}</span>
                 </div>
-                <button className="w-full bg-brand-yellow text-brand-purple font-black py-4 rounded-2xl text-lg hover:bg-brand-yellow-light transition-colors active:scale-95 shadow-[0_0_20px_rgba(251,192,45,0.4)]">
-                  Finalizar Pagamento
+                <button 
+                  onClick={() => {
+                    onClose();
+                    if(window.openCheckout) window.openCheckout();
+                  }} 
+                  className="w-full bg-[#39ff14] text-[#4a148c] font-black py-4 rounded-2xl text-lg hover:bg-[#32e012] transition-colors active:scale-95 shadow-[0_0_20px_rgba(57,255,20,0.4)]"
+                >
+                  Continuar para Pagamento
                 </button>
               </div>
             )}

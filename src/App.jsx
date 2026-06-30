@@ -10,6 +10,7 @@ import BottomSheet from './components/BottomSheet';
 import CartDrawer from './components/CartDrawer';
 import BottomNav from './components/BottomNav';
 import SidebarMenu from './components/SidebarMenu';
+import Checkout from './components/Checkout';
 import { Menu } from 'lucide-react';
 
 const MainApp = () => {
@@ -17,6 +18,10 @@ const MainApp = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  
+  // Conector simples entre CartDrawer e Checkout
+  window.openCheckout = () => setIsCheckoutOpen(true);
   
   const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
 
@@ -79,6 +84,12 @@ const MainApp = () => {
 
       {/* Modais e Navbars */}
       <SidebarMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <Checkout 
+        isOpen={isCheckoutOpen} 
+        onClose={() => setIsCheckoutOpen(false)} 
+        cartItems={cartItems} 
+        total={cartItems.reduce((acc, item) => acc + (item.finalPrice || item.price), 0)} 
+      />
       <BottomSheet 
         product={selectedProduct} 
         onClose={() => setSelectedProduct(null)} 
