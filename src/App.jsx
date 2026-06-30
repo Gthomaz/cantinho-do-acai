@@ -44,7 +44,7 @@ const MainApp = () => {
               src="/logo.jpg" 
               onError={(e) => { e.target.src = "https://ui-avatars.com/api/?name=Cantinho+Açaí&background=4a148c&color=39ff14&rounded=true&size=128&bold=true"; }}
               alt="Cantinho do Açaí" 
-              className="w-24 h-24 rounded-full mb-2 shadow-[0_0_15px_rgba(0,255,0,0.3)] border-2 border-[#39ff14] object-cover" 
+              className="w-32 h-32 rounded-full mb-2 shadow-[0_0_15px_rgba(0,255,0,0.3)] border-2 border-[#39ff14] object-cover" 
             />
             <h1 className="text-2xl font-black mb-1 tracking-tight text-[#39ff14] drop-shadow-[0_0_10px_rgba(57,255,20,0.8)]">
               Cantinho do Açaí
