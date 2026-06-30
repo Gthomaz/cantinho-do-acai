@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function CategoryNav({ categories, selectedCategory, onSelect }) {
   return (
-    <div className="w-full overflow-x-auto hide-scrollbar py-3 px-2 bg-bg-dark/95 backdrop-blur-md border-b border-brand-purple/10">
-      <div className="flex gap-1.5 justify-center sm:gap-3">
+    <div className="w-full py-3 px-2 bg-bg-dark/95 backdrop-blur-md border-b border-brand-purple/10">
+      <div className="flex flex-wrap gap-2 justify-center">
         {categories.map((cat) => (
           <button
             key={cat.id}
