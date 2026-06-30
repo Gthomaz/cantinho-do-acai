@@ -29,7 +29,7 @@ const MainApp = () => {
           <div className="relative z-10 flex flex-col items-center text-center">
             {/* Link atualizado para puxar a logo oficial que você subiu! */}
             <img 
-              src="/cantinhodo-acai-%20logo.jpg" 
+              src="/logo.jpg" 
               onError={(e) => { e.target.src = "https://ui-avatars.com/api/?name=Cantinho+Açaí&background=4a148c&color=39ff14&rounded=true&size=128&bold=true"; }}
               alt="Cantinho do Açaí" 
               className="w-16 h-16 rounded-full mb-2 shadow-[0_0_15px_rgba(0,255,0,0.3)] border-2 border-[#39ff14] object-cover" 
