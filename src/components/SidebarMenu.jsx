@@ -52,23 +52,19 @@ export default function SidebarMenu({ isOpen, onClose }) {
               {/* Navegação Secundária */}
               <div className="flex flex-col gap-3">
                 <button className="flex items-center gap-4 text-gray-300 hover:text-[#39ff14] transition-colors p-3.5 bg-bg-card rounded-xl border border-gray-800 shadow-sm">
-                  <Home size={22} className="text-brand-yellow" />
+                  <Home size={22} className="text-cyan-400" />
                   <span className="font-semibold">Início</span>
                 </button>
                 <button className="flex items-center gap-4 text-gray-300 hover:text-[#39ff14] transition-colors p-3.5 bg-bg-card rounded-xl border border-gray-800 shadow-sm">
-                  <MessageCircle size={22} className="text-brand-yellow" />
+                  <MessageCircle size={22} className="text-cyan-400" />
                   <span className="font-semibold">Bate-Papo</span>
                 </button>
                 <button className="flex items-center gap-4 text-gray-300 hover:text-[#39ff14] transition-colors p-3.5 bg-bg-card rounded-xl border border-gray-800 shadow-sm">
-                  <MapPin size={22} className="text-brand-yellow" />
-                  <span className="font-semibold">Endereço de Entrega</span>
-                </button>
-                <button className="flex items-center gap-4 text-gray-300 hover:text-[#39ff14] transition-colors p-3.5 bg-bg-card rounded-xl border border-gray-800 shadow-sm">
-                  <Phone size={22} className="text-brand-yellow" />
+                  <Phone size={22} className="text-cyan-400" />
                   <span className="font-semibold">Contato (WhatsApp)</span>
                 </button>
                 <button className="flex items-center gap-4 text-gray-300 hover:text-[#39ff14] transition-colors p-3.5 bg-bg-card rounded-xl border border-gray-800 shadow-sm">
-                  <Info size={22} className="text-brand-yellow" />
+                  <Info size={22} className="text-cyan-400" />
                   <span className="font-semibold">Sobre Nós</span>
                 </button>
               </div>
