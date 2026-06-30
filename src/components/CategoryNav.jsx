@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function CategoryNav({ categories, selectedCategory, onSelect }) {
   return (
-    <div className="w-full overflow-x-auto hide-scrollbar py-4 px-4 sticky top-[72px] bg-bg-dark/95 backdrop-blur-md z-30 border-b border-brand-purple/10">
+    <div className="w-full overflow-x-auto hide-scrollbar py-3 px-4 bg-bg-dark/95 backdrop-blur-md border-b border-brand-purple/10">
       <div className="flex gap-3">
         {categories.map((cat) => (
           <button
