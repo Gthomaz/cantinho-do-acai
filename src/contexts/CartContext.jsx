@@ -5,13 +5,18 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = (product, options) => {
-    setCartItems([...cartItems, { ...product, options }]);
-    console.log("Item adicionado ao carrinho:", product.name);
+  const addToCart = (item) => {
+    setCartItems([...cartItems, item]);
+  };
+
+  const removeFromCart = (index) => {
+    const newCart = [...cartItems];
+    newCart.splice(index, 1);
+    setCartItems(newCart);
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
