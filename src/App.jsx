@@ -9,11 +9,14 @@ import ProductCard from './components/ProductCard';
 import BottomSheet from './components/BottomSheet';
 import CartDrawer from './components/CartDrawer';
 import BottomNav from './components/BottomNav';
+import SidebarMenu from './components/SidebarMenu';
+import { Menu } from 'lucide-react';
 
 const MainApp = () => {
   const [selectedCategory, setSelectedCategory] = useState(menuData.categories[0].id);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
 
@@ -26,6 +29,15 @@ const MainApp = () => {
         {/* Header Premium Compacto */}
         <header className="w-full bg-[#4a148c] text-white px-6 pt-6 pb-4 rounded-b-[30px] shadow-[0_5px_15px_rgba(74,20,140,0.4)] relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+          
+          {/* Botão do Slider Menu */}
+          <button 
+            onClick={() => setIsMenuOpen(true)} 
+            className="absolute top-6 left-6 z-20 text-[#39ff14] hover:text-white transition-colors p-1"
+          >
+            <Menu size={32} />
+          </button>
+
           <div className="relative z-10 flex flex-col items-center text-center">
             {/* Link atualizado para puxar a logo oficial que você subiu! */}
             <img 
@@ -66,6 +78,7 @@ const MainApp = () => {
       </main>
 
       {/* Modais e Navbars */}
+      <SidebarMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       <BottomSheet 
         product={selectedProduct} 
         onClose={() => setSelectedProduct(null)} 
