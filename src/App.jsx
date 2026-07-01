@@ -92,12 +92,14 @@ const MainApp = () => {
         />
       </div>
 
-      {/* Lista de Produtos */}
+      {/* Lista de Produtos Padrão */}
       <main className="flex-1 px-4 py-6 max-w-7xl mx-auto w-full">
-        <h2 className="text-2xl font-bold text-white mb-6">
+        {/* Opcional: Mostrar o nome da categoria selecionada acima dos produtos, como no mockup */}
+        <h2 className="text-3xl font-black text-white mb-6 tracking-tight">
           {menuData.categories.find(c => c.id === selectedCategory)?.name}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {loadingProducts ? (
             <div className="col-span-full flex flex-col items-center justify-center py-12 text-[#39ff14]">
               <Loader2 className="animate-spin w-12 h-12 mb-4" />
